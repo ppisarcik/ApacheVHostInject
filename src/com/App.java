@@ -20,8 +20,8 @@ public class App {
     private JTextField serverName;
     private JTextField projectRoute;
     private JButton settings;
-    private String vhostRoute;
-    private String hosts;
+    public String vhostRouteProperties;
+    public String hostsProperties;
 
     private App() {
         submit.addActionListener(new ActionListener() {
@@ -53,7 +53,7 @@ public class App {
 
     private void writeVirtualHost(String projectRoute, String serverName)
     {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(vhostRoute, true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(vhostRouteProperties, true))) {
 
             bw.write("\n");
             bw.write("<VirtualHost *:80>\n");
@@ -75,7 +75,7 @@ public class App {
 
     private void writeHost(String serverName)
     {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(hosts, true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(hostsProperties, true))) {
 
             bw.write("\n");
             bw.write("127.0.0.1       "+serverName);
@@ -94,8 +94,8 @@ public class App {
         try {
             Properties properties = new Properties();
             properties.load(new FileInputStream("config/config.cfg"));
-            vhostRoute = properties.getProperty("vhostRoute");
-            hosts = properties.getProperty("hostRoute");
+            vhostRouteProperties = properties.getProperty("vhostRoute");
+            hostsProperties = properties.getProperty("hostRoute");
 
         } catch (IOException e1) {
             e1.printStackTrace();

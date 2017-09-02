@@ -30,6 +30,14 @@ public class settings {
 
             }
         });
-    }
+        try {
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("config/config.cfg"));
+            vhostRoute.setText(properties.getProperty("vhostRoute"));
+            hostRoute.setText(properties.getProperty("hostRoute"));
 
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }
