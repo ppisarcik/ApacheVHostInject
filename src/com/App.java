@@ -1,32 +1,44 @@
 package com;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import com.settings;
 
 public class App {
 
-    private JButton buttonmsg;
+    private JButton submit;
     private JPanel mainPanel;
     private JTextField serverName;
     private JTextField projectRoute;
     private JCheckBox win;
     private JCheckBox linux;
+    private JButton settings;
     private String vhostRoute;
     private String hosts;
 
     private App() {
-        buttonmsg.addActionListener(new ActionListener() {
+        submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 os();
                 JOptionPane.showMessageDialog(null, serverName.getText());
                  writeVirtualHost(projectRoute.getText(), serverName.getText());
                  writeHost(serverName.getText());
+            }
+        });
+        settings.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFrame settings = new JFrame("settings");
+                settings.setContentPane(new settings().settingsPanel);
+                settings.pack();
+                settings.setVisible(true);
             }
         });
     }
@@ -52,8 +64,6 @@ public class App {
                 bw.write( "  Require all Granted\n");
                 bw.write("  </Directory>\n");
                 bw.write("</VirtualHost>\n");
-                // no need to close it.
-                //bw.close();
 
                 System.out.println("Done");
 
@@ -99,4 +109,5 @@ public class App {
             hosts = "C:/Windows/System32/drivers/etc/hosts";
         }
     }
+
 }
